@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>💰 Personal Finance Tracker</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Dashboard Summary Cards -->
+        <div class="dashboard">
+            <div class="card card-balance">
+                <h2>Current Balance</h2>
+                <div class="amount" id="total-balance">₹0.00</div>
+                <div>Last updated: <span id="last-updated">Today</span></div>
+            </div>
+            <div class="card card-income">
+                <h2>Total Income</h2>
+                <div class="amount" id="total-income">₹0.00</div>
+                <div>This month</div>
+            </div>
+            <div class="card card-expenses">
+                <h2>Total Expenses</h2>
+                <div class="amount" id="total-expenses">₹0.00</div>
+                <div>This month</div>
+            </div>
+        </div>
+        
+        <!-- Transaction Form -->
+        <div class="transaction-form">
+            <h2 class="form-title">Add New Transaction</h2>
+            <form id="transaction-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transaction-name">Description</label>
+                        <input type="text" id="transaction-name" class="form-control" placeholder="What was this transaction for?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-amount">Amount (₹)</label>
+                        <input type="number" id="transaction-amount" class="form-control" placeholder="0.00" step="0.01" min="0.01" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="transaction-type">Type</label>
+                        <select id="transaction-type" class="form-control form-select" required>
+                            <option value="income">Income</option>
+                            <option value="expense">Expense</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-category">Category</label>
+                        <select id="transaction-category" class="form-control form-select" required>
+                            <!-- Categories will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-date">Date</label>
+                        <input type="date" id="transaction-date" class="form-control" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-add">Add Transaction</button>
+            </form>
+        </div>
+        
+        <!-- Transaction History -->
+        <div class="transaction-list">
+            <h2 class="form-title">Transaction History</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="filter-type">Filter by Type:</label>
+                    <select id="filter-type" class="form-control form-select">
+                        <option value="all">All Types</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="filter-category">Filter by Category:</label>
+                    <select id="filter-category" class="form-control form-select">
+                        <option value="all">All Categories</option>
+                        <!-- Categories will be populated by JavaScript -->
+                    </select>
+                </div>
+            </div>
+            
+            <div id="transactions-table-container">
+                <div id="empty-state" class="empty-state">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>No transactions yet. Add your first transaction!</p>
+                </div>
+                <table id="transactions-table" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-body">
+                        <!-- Transactions will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts">
+            <div class="chart-container">
+                <h2 class="chart-title">Spending by Category</h2>
+                <div id="category-chart" class="chart">
+                    <div id="category-chart-empty" class="empty-state">
+                        <p>Add transactions to see your spending analysis</p>
+                    </div>
+                    <canvas id="category-chart-canvas" style="display: none;"></canvas>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h2 class="chart-title">Monthly Income vs Expenses</h2>
+                <div id="monthly-chart" class="chart">
+                    <div id="monthly-chart-empty" class="empty-state">
+                        <p>Add transactions to see your monthly analysis</p>
+                    </div>
+                    <canvas id="monthly-chart-canvas" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">Transaction added successfully!</div>
+    </div>
+
+    <!-- Import Chart.js from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
